@@ -9,8 +9,8 @@ namespace Senai_Spmedgroup_API.Interfaces
     public interface IConsultaRepository
     {
          void CadastrarConsulta(Consulta consulta);
-        List<Consulta> ListaConsulta();
+ 
 
-        List<Consulta> ListConsultaUsuario(int IdUsuario, int IdTipoUsuario);
+        List<Consulta> ListConsultaUsuario(int idUsuario, int idTipoUsuario);
     }
 }

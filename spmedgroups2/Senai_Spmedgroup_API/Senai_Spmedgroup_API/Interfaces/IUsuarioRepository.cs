@@ -11,6 +11,9 @@ namespace Senai_Spmedgroup_API.Interfaces
         //buscando por email
         Usuario BuscarPorEmailSenha(string email, string senha);
 
+        //cadastra qualquer tipo de usuario 
+        void CadastrarUsuario(Usuario usuario);
+
 
     }
 }

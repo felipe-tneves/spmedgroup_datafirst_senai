@@ -23,7 +23,7 @@ namespace Senai_Spmedgroup_API.Controllers
         
         public LoginController()
         {
-            UsuarioRepository = new UsarioRepository();
+            UsuarioRepository = new UsuarioRepository();
         }
 
         [HttpPost]
@@ -45,12 +45,12 @@ namespace Senai_Spmedgroup_API.Controllers
                    new Claim(ClaimTypes.Role, usuario.IdTipoUsuario.ToString())
                 };
 
-                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("svigufo-chave-autenticacao"));
+                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("spmedgroup-chave-autenticacao"));
 
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                 var token = new JwtSecurityToken(
-                    issuer: "Spmedgroup",
-                    audience: "Spmedgroup",
+                    issuer: "SpMedGroup.WebApi",
+                    audience: "SpMedGroup.WebApi",
                     claims: claims,
                     expires: DateTime.Now.AddMinutes(30),
                     signingCredentials: creds);

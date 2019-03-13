@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Senai_Spmedgroup_API.Domains;
@@ -24,20 +25,9 @@ namespace Senai_Spmedgroup_API.Controllers
             ConsultaRepository = new ConsultaRepository();
         }
 
-        [HttpGet]
-        public IActionResult Listar()
-        {
-            try
-            {
-                return Ok(ConsultaRepository.ListaConsulta());
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { mensagem = "Erro" });
-            }
-        }
-
+        //cadastra consulta 
         [HttpPost]
+        [Authorize (Roles="1")]
         public IActionResult CadastrarConsulta(Consulta consulta)
         {
             try
@@ -51,18 +41,20 @@ namespace Senai_Spmedgroup_API.Controllers
             }
         }
 
-        [HttpGet("logado")]
+        // mostra lista de consulta 
+        [HttpGet]
+        [Authorize]
         public IActionResult List()
         {
             try
             {
-                int IdUsuario = Convert.ToInt32(HttpContext.User.Claims.First(usuario => usuario.Type == JwtRegisteredClaimNames.Jti).Value);
-                int IdTipoUsuario = Convert.ToInt32(HttpContext.User.Claims.First(usuario => usuario.Type == ClaimTypes.Role).Value);
-                return Ok(ConsultaRepository.ListConsultaUsuario(IdUsuario, IdTipoUsuario));
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(usuario => usuario.Type == JwtRegisteredClaimNames.Jti).Value);
+                int idTipoUsuario = Convert.ToInt32(HttpContext.User.Claims.First(usuario => usuario.Type == ClaimTypes.Role).Value);
+                return Ok(ConsultaRepository.ListConsultaUsuario(idUsuario, idTipoUsuario));
             }
             catch (Exception ex)
             {
-                return BadRequest(new { mensagem = "Erro" });
+                return BadRequest(new { mensagem = ex });
             }
         }
 
