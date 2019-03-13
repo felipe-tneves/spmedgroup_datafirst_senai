@@ -58,6 +58,32 @@ namespace Senai_Spmedgroup_API.Controllers
             }
         }
 
+        [HttpPut]
+        [Authorize (Roles = "1")]
+        public IActionResult cancelar(Consulta consulta,int id)
+        {
+            try
+            {
+                Consulta pesquisa = ConsultaRepository.BuscarPorId(id);
+
+                if (pesquisa == null)
+                {
+                    return BadRequest(new { mensagem = "consulta não encontrada"});
+                }
+                ConsultaRepository.Cancelamento(consulta, id);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { mensagem = "Erro" });
+            }
+        }
+
+
+
+
 
     }
 }

@@ -9,6 +9,15 @@ namespace Senai_Spmedgroup_API.Repositories
 {
     public class ConsultaRepository : IConsultaRepository
     {
+
+        public Consulta BuscarPorId(int id)
+        {
+            using (SPMEDGROUPContext buscar = new SPMEDGROUPContext())
+            {
+                return buscar.Consulta.Find(id);
+            }
+        }
+
         public void CadastrarConsulta(Consulta consulta)
         {
             using (SPMEDGROUPContext cadconsulta = new SPMEDGROUPContext())
@@ -18,6 +27,19 @@ namespace Senai_Spmedgroup_API.Repositories
 
             }
         }
+
+
+
+        public void Cancelamento(Consulta consulta, int id)
+        {
+            using (SPMEDGROUPContext cancelamento = new SPMEDGROUPContext())
+            {
+                cancelamento.Consulta.Update(consulta);
+                cancelamento.SaveChanges();
+            }
+        }
+
+
 
         //public List<Consulta> ListaConsulta()
         //{
@@ -56,5 +78,6 @@ namespace Senai_Spmedgroup_API.Repositories
                 return null;
             }
         }
+
     }
 }

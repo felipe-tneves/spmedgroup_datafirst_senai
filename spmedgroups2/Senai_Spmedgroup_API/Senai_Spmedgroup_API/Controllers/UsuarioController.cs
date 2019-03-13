@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Senai_Spmedgroup_API.Domains;
@@ -22,7 +23,7 @@ namespace Senai_Spmedgroup_API.Controllers
             UsuarioRepository = new UsuarioRepository();
         }
 
-
+        [Authorize (Roles = "1")]
         [HttpPost]
         public IActionResult CadastrarUsuario(Usuario usuario)
         {
